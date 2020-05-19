@@ -3,7 +3,7 @@
     "identifier": "installed-Dragon",
     "name": "installed-Dragon",
     "abstract": "A list of modules installed on the Dragon KSP instance",
-    "version": "2020.05.19.03.04.57",
+    "version": "2020.05.19.03.55.16",
     "ksp_version_min": "1.8.1",
     "ksp_version_max": "1.8.1",
     "license": [
@@ -153,6 +153,9 @@
         },
         {
             "name": "VenStockRevamp-Core"
+        },
+        {
+            "name": "SpaceXLaunchVehicles"
         }
     ],
     "recommends": [],
