@@ -1,0 +1,161 @@
+{
+    "spec_version": "v1.18",
+    "identifier": "installed-Dragon",
+    "name": "installed-Dragon",
+    "abstract": "A list of modules installed on the Dragon KSP instance",
+    "version": "2020.05.19.03.04.57",
+    "ksp_version_min": "1.8.1",
+    "ksp_version_max": "1.8.1",
+    "license": [
+        "unknown"
+    ],
+    "depends": [
+        {
+            "name": "SpaceXLegs"
+        },
+        {
+            "name": "FMRSContinued"
+        },
+        {
+            "name": "Trajectories"
+        },
+        {
+            "name": "ModuleManager"
+        },
+        {
+            "name": "RecoveryController"
+        },
+        {
+            "name": "ToolbarController"
+        },
+        {
+            "name": "ClickThroughBlocker"
+        },
+        {
+            "name": "ZeroMiniAVC"
+        },
+        {
+            "name": "RealSolarSystem"
+        },
+        {
+            "name": "RSSTextures8192"
+        },
+        {
+            "name": "KSCSwitcher"
+        },
+        {
+            "name": "RSSDateTimeFormatter"
+        },
+        {
+            "name": "Kopernicus"
+        },
+        {
+            "name": "ModularFlightIntegrator"
+        },
+        {
+            "name": "HyperEdit"
+        },
+        {
+            "name": "KerbalEngineerRedux"
+        },
+        {
+            "name": "kRPC"
+        },
+        {
+            "name": "MechJeb2"
+        },
+        {
+            "name": "RealismOverhaul"
+        },
+        {
+            "name": "B9-PWings-Fork"
+        },
+        {
+            "name": "ConnectedLivingSpace"
+        },
+        {
+            "name": "DeadlyReentry"
+        },
+        {
+            "name": "HangerExtenderExtended"
+        },
+        {
+            "name": "KSP-AVC"
+        },
+        {
+            "name": "ProceduralFairings"
+        },
+        {
+            "name": "ProceduralFairings-ForEverything"
+        },
+        {
+            "name": "ProceduralParts"
+        },
+        {
+            "name": "PersistentRotation"
+        },
+        {
+            "name": "RCSBuildAidCont"
+        },
+        {
+            "name": "RemoteTech"
+        },
+        {
+            "name": "SemiSaturatableRW"
+        },
+        {
+            "name": "TACLS"
+        },
+        {
+            "name": "TestFlight"
+        },
+        {
+            "name": "TexturesUnlimited"
+        },
+        {
+            "name": "Toolbar"
+        },
+        {
+            "name": "VenStockRevamp"
+        },
+        {
+            "name": "AdvancedJetEngine"
+        },
+        {
+            "name": "FerramAerospaceResearchContinued"
+        },
+        {
+            "name": "SolverEngines"
+        },
+        {
+            "name": "KerbalJointReinforcementContinued"
+        },
+        {
+            "name": "RealChute"
+        },
+        {
+            "name": "RealFuels"
+        },
+        {
+            "name": "CommunityResourcePack"
+        },
+        {
+            "name": "RealHeat"
+        },
+        {
+            "name": "RealPlume"
+        },
+        {
+            "name": "SmokeScreen"
+        },
+        {
+            "name": "BackgroundResources"
+        },
+        {
+            "name": "VenStockRevamp-Core"
+        }
+    ],
+    "recommends": [],
+    "suggests": [],
+    "kind": "metapackage"
+}
