@@ -14,19 +14,20 @@ class Control:
         self.ruleset = ruleset
 
         for parameter in inputParameter:
-            parameter_name = str(parameter).split(".")[1]
+            if parameter == inputParameter.position:
+                parameter_name = "center_of_mass"
+            else:
+                parameter_name = str(parameter).split(".")[1]
+
             new_stream = conn.add_stream(getattr, vessel.flight(), parameter_name)
 
             self.input_streams[parameter] = new_stream
 
 
-
-
-    def set_target_velocity(self, velocity):
-        #brief: Burns the Engines until target velocity is reached
-
-
     def update(self):
+        """
+        :return: None
+        """
 
         for rule in self.ruleset:
             new_value = self.handle_rule(rule)
@@ -34,6 +35,9 @@ class Control:
 
 
     def fetch_parameter_values(self):
+        """
+        :return: Parameter - Value Dictionary with Vessel Data from streams
+        """
 
         params = dict()
 
@@ -43,21 +47,40 @@ class Control:
         return params
 
 
-
     def handle_rule(self, rule):
 
-        params = self.fetch_parameter_values()
-        name, value = rule(params)
+        #TODO: Fetch IO Params from Vessel
 
-        return tuple(name, value)
+        iparams = self.fetch_parameter_values()
+        ioparams = None
+
+        name, value = rule(ioparams, iparams)
+
+        return name, value
 
 
-    def update_value(self, value):
+    def update_value(self, value_tupel):
 
-        if len(value) > 2:
+        if len(value_tupel) != 2:
             return Exception()
         else:
-            if value[0] == "pitch":
-                self.vessel.auto_pilot.target_pitch_and_heading(self.vessel.auto_pilot.heading, value[1])
+            if value_tupel[0] == ioParameter.pitch:
+                self.vessel.auto_pilot.target_pitch_and_heading(self.vessel.auto_pilot.heading, value_tupel[1])
+            elif value_tupel[0] == ioParameter.rotation:
+                #TODO: Quaternion Scheiße
+
+                self.vessel.auto_pilot.roll = value_tupel[1]
+
+            elif value_tupel[0] == ioParameter.direction:
+
+                self.vessel.auto_pilot.reference_frame = self.vessel.orbit.reference_frame
+                self.vessel.auto_pilot.target_direction= value_tupel[1]
+
+            elif value_tupel[0] == ioParameter.heading:
+
+                self.vessel.auto_pilot.target_pitch_and_heading(value_tupel[1], self.vessel.autp_pilot.pitch)
+
+            elif value_tupel[0] == ioParameter.roll:
+                self.vessel.auto_pilot.roll = value_tupel[1]
             else:
                 print("penis")

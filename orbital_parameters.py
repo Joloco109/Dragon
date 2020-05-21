@@ -4,7 +4,8 @@ class OrbitalParameters:
     inclination = float
     eccentricity = float
 
-    def __init__(self, apoapsis: None, periapsis: None, inclination: None, eccentricity: None):
+    def __init__(self, apoapsis: float, periapsis: float, inclination: float, eccentricity: float):
+
         self.apoapsis: float = apoapsis
         self.periapsis: float = periapsis
         self.inclination: float = inclination
