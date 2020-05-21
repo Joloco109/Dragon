@@ -3,7 +3,7 @@
     "identifier": "installed-Dragon",
     "name": "installed-Dragon",
     "abstract": "A list of modules installed on the Dragon KSP instance",
-    "version": "2020.05.19.03.55.16",
+    "version": "2020.05.21.03.31.13",
     "ksp_version_min": "1.8.1",
     "ksp_version_max": "1.8.1",
     "license": [
@@ -156,6 +156,30 @@
         },
         {
             "name": "SpaceXLaunchVehicles"
+        },
+        {
+            "name": "ROEngines"
+        },
+        {
+            "name": "ROSolar"
+        },
+        {
+            "name": "ROTanks"
+        },
+        {
+            "name": "ROCapsules"
+        },
+        {
+            "name": "ROLib"
+        },
+        {
+            "name": "B9PartSwitch"
+        },
+        {
+            "name": "PatchManager"
+        },
+        {
+            "name": "BDAnimationModules"
         }
     ],
     "recommends": [],
