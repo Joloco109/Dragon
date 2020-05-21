@@ -2,13 +2,13 @@ from enum import Enum
 
 inputParameter = Enum( "inputParameter", "\
         position\
-        mean_alt\
-        surf_alt\
+        mean_altitude\
+        surface_altitude\
         velocity\
         g_force\
         prograde\
         retrograde\
-        dyn_pressure\
+        dynamic_pressure\
         sideslip_angle\
         angular_velocity\
     ")
