@@ -16,10 +16,12 @@ class Control:
         for parameter in inputParameter:
             if parameter == inputParameter.position:
                 parameter_name = "center_of_mass"
+                new_stream = conn.add_stream(getattr, vessel.flight(), parameter_name)
+            elif parameter == inputParameter.angular_velocity:
+                new_stream = conn.add_stream(vessel.angular_velocity, self.vessel.orbital_reference_frame)
             else:
                 parameter_name = str(parameter).split(".")[1]
-
-            new_stream = conn.add_stream(getattr, vessel.flight(), parameter_name)
+                new_stream = conn.add_stream(getattr, vessel.flight(), parameter_name)
 
             self.input_streams[parameter] = new_stream
 
@@ -31,30 +33,42 @@ class Control:
 
         for rule in self.ruleset:
             new_value = self.handle_rule(rule)
+            print(new_value)
             self.update_value(new_value)
 
 
-    def fetch_parameter_values(self):
+    def fetch_input_parameters(self):
         """
         :return: Parameter - Value Dictionary with Vessel Data from streams
         """
 
         params = dict()
 
-        for parameter, stream in self.input_streams:
-            params[parameter] = stream()
+        for key in self.input_streams.keys():
+            params[key]= self.input_streams[key]()
+
+        return params
+
+    def fetch_io_parameters(self):
+
+        params = dict()
+
+        params[ioParameter.rotation] = self.vessel.flight().rotation
+        params[ioParameter.direction] = self.vessel.flight().direction
+        params[ioParameter.pitch] = self.vessel.flight().pitch
+        params[ioParameter.heading] = self.vessel.flight().heading
+        params[ioParameter.roll] = self.vessel.flight().roll
+        params[ioParameter.throttle] = self.vessel.control.throttle
 
         return params
 
 
     def handle_rule(self, rule):
 
-        #TODO: Fetch IO Params from Vessel
+        iparams = self.fetch_input_parameters()
+        ioparams = self.fetch_io_parameters()
 
-        iparams = self.fetch_parameter_values()
-        ioparams = None
-
-        name, value = rule(ioparams, iparams)
+        name, value = rule([90], {**ioparams  ,**iparams})
 
         return name, value
 
@@ -65,7 +79,8 @@ class Control:
             return Exception()
         else:
             if value_tupel[0] == ioParameter.pitch:
-                self.vessel.auto_pilot.target_pitch_and_heading(self.vessel.auto_pilot.heading, value_tupel[1])
+                self.vessel.auto_pilot.target_pitch_and_heading( value_tupel[1], self.vessel.auto_pilot.target_heading)
+                print("Updated!")
             elif value_tupel[0] == ioParameter.rotation:
                 #TODO: Quaternion Scheiße
 
@@ -78,7 +93,7 @@ class Control:
 
             elif value_tupel[0] == ioParameter.heading:
 
-                self.vessel.auto_pilot.target_pitch_and_heading(value_tupel[1], self.vessel.autp_pilot.pitch)
+                self.vessel.auto_pilot.target_pitch_and_heading(self.vessel.flight().auto_pilot.target_pitch, value_tupel[1])
 
             elif value_tupel[0] == ioParameter.roll:
                 self.vessel.auto_pilot.roll = value_tupel[1]

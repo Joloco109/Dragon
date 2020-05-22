@@ -19,4 +19,5 @@ ioParameter = Enum( "ioParameter", "\
         pitch\
         heading\
         roll\
+        throttle\
     ")

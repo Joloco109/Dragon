@@ -1,6 +1,13 @@
 from control_parameters import inputParameter, ioParameter
 
 class Rule:
+
+    @staticmethod
+    def const_pitch(rule_parameters, input_parameters):
+
+        return ( ioParameter.pitch,
+                 rule_parameters[0])
+
     @staticmethod
     def rel_pitch(rule_parameters, input_parameter):
         """

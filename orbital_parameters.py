@@ -17,3 +17,8 @@ class OrbitalParameters:
         self.inclination: float = vessel.orbit.inclination
         self.eccentricity: float = vessel.orbit.eccentricity
 
+    def __eq__(self, other):
+
+        #TODO: Define logic to determine if Orbits are approximately the same
+
+        return False
