@@ -11,6 +11,7 @@ inputParameter = Enum( "inputParameter", "\
         dynamic_pressure\
         sideslip_angle\
         angular_velocity\
+        available_thrust\
     ")
 
 ioParameter = Enum( "ioParameter", "\
