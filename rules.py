@@ -1,4 +1,4 @@
-from control_parameters import inputParameter, ioParameter
+from control_parameters import VesselParameter, FlightParameter, ControlParameter, AutopilotParameter
 
 def pitch_from_x( v ):
     return arcsin(v[0]/sqrt( v[0]**2 + v[1]**2 + v[2]**2 ))
@@ -7,7 +7,7 @@ class Rule:
     @staticmethod
     def const_pitch(rule_parameters, input_parameters):
 
-        return ( ioParameter.pitch,
+        return ( AutopilotParameter.target_pitch,
                  rule_parameters[0])
 
     @staticmethod
@@ -18,8 +18,8 @@ class Rule:
         :param input_parameter:
         :return:
         """
-        pitch = pitch_from_x( input_parameter[ inputParameter[ 'flight.prograde' ] ] )
-        return ( ioParameter.pitch,
+        pitch = pitch_from_x( input_parameter[ FlightParameter.prograde ] )
+        return ( AutopilotParameter.target_pitch,
             pitch + rule_parameters[0] )
 
     @staticmethod
@@ -30,7 +30,7 @@ class Rule:
         :param input_parameter:
         :return:
         """
-        return ( ioParameter.heading,
+        return ( Autopilot.target_heading,
             rule_parameters[0] )
 
     @staticmethod
@@ -41,8 +41,8 @@ class Rule:
         :param input_parameter:
         :return:
         """
-        mass = input_parameter[ inputParameter['mass'] ]
-        thrust = input_parameter[ inputParameter['available_thrust'] ]
+        mass = input_parameter[ VesselParameter.mass ]
+        thrust = input_parameter[ VesselParameter.available_thrust ]
         throttle = rule_parameters[0]* mass / thrust
-        return ( ioParameter.throttle,
+        return ( ControlParameter.throttle,
              throttle )
