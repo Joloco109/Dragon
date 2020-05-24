@@ -53,7 +53,7 @@ class Control:
 
         ioparams = self.fetch_input_parameters()
 
-        name, value = rule([90], ioparams)
+        name, value = rule(ioparams)
 
         return name, value
 

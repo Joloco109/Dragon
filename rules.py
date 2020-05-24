@@ -5,6 +5,16 @@ def pitch_from_x( v ):
     return asin(v[0]/sqrt( v[0]**2 + v[1]**2 + v[2]**2 ))
 
 class Rule:
+    rule_parameters = list()
+
+    def __init__( self, rule_func, rule_parameters ):
+        self.rule = rule_func
+        self.rule_parameters[:] = rule_parameters
+
+    def __call__( self, input_parameters ):
+        return self.rule( self.rule_parameters, input_parameters )
+
+
     @staticmethod
     def const_pitch(rule_parameters, input_parameters):
 
