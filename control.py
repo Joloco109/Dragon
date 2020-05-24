@@ -64,23 +64,23 @@ class Control:
             return Exception()
         else:
             if value_tuple[0] == AutopilotParameter.target_pitch:
-                self.vessel.auto_pilot.target_pitch_and_heading( value_tupel[1], self.vessel.auto_pilot.target_heading)
+                self.vessel.auto_pilot.target_pitch_and_heading( value_tuple[1], self.vessel.auto_pilot.target_heading)
                 print("Updated!")
 
             elif value_tuple[0] == AutopilotParameter.target_direction:
 
                 self.vessel.auto_pilot.reference_frame = self.vessel.orbit.reference_frame
-                self.vessel.auto_pilot.target_direction= value_tupel[1]
+                self.vessel.auto_pilot.target_direction= value_tuple[1]
 
             elif value_tuple[0] == AutopilotParameter.target_heading:
 
-                self.vessel.auto_pilot.target_pitch_and_heading(self.vessel.flight().auto_pilot.target_pitch, value_tupel[1])
+                self.vessel.auto_pilot.target_pitch_and_heading(self.vessel.flight().auto_pilot.target_pitch, value_tuple[1])
 
             elif value_tuple[0] == AutopilotParameter.target_roll:
-                self.vessel.auto_pilot.roll = value_tupel[1]
+                self.vessel.auto_pilot.roll = value_tuple[1]
 
             elif value_tuple[0] == ControlParameter.throttle:
-                self.vessel.control.throttle = value_tupel[1]
+                self.vessel.control.throttle = value_tuple[1]
 
             else:
                 print("penis")
