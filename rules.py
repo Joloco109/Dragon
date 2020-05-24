@@ -1,7 +1,8 @@
 from control_parameters import VesselParameter, FlightParameter, ControlParameter, AutopilotParameter
+from math import asin, sqrt
 
 def pitch_from_x( v ):
-    return arcsin(v[0]/sqrt( v[0]**2 + v[1]**2 + v[2]**2 ))
+    return asin(v[0]/sqrt( v[0]**2 + v[1]**2 + v[2]**2 ))
 
 class Rule:
     @staticmethod
@@ -30,7 +31,7 @@ class Rule:
         :param input_parameter:
         :return:
         """
-        return ( Autopilot.target_heading,
+        return ( AutopilotParameter.target_heading,
             rule_parameters[0] )
 
     @staticmethod
