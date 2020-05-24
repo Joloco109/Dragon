@@ -48,26 +48,11 @@ class Control:
 
         return params
 
-    def fetch_io_parameters(self):
-
-        params = dict()
-
-        params[ioParameter.rotation] = self.vessel.flight().rotation
-        params[ioParameter.direction] = self.vessel.flight().direction
-        params[ioParameter.pitch] = self.vessel.flight().pitch
-        params[ioParameter.heading] = self.vessel.flight().heading
-        params[ioParameter.roll] = self.vessel.flight().roll
-        params[ioParameter.throttle] = self.vessel.control.throttle
-
-        return params
-
-
     def handle_rule(self, rule):
 
         iparams = self.fetch_input_parameters()
-        ioparams = self.fetch_io_parameters()
 
-        name, value = rule([90], {**ioparams  ,**iparams})
+        name, value = rule([90], ioparams)
 
         return name, value
 
@@ -77,24 +62,24 @@ class Control:
         if len(value_tupel) != 2:
             return Exception()
         else:
-            if value_tupel[0] == ioParameter.pitch:
+            if value_tupel[0] == AutopilotParameter.target_pitch:
                 self.vessel.auto_pilot.target_pitch_and_heading( value_tupel[1], self.vessel.auto_pilot.target_heading)
                 print("Updated!")
-            elif value_tupel[0] == ioParameter.rotation:
-                #TODO: Quaternion Scheiße
 
-                self.vessel.auto_pilot.roll = value_tupel[1]
-
-            elif value_tupel[0] == ioParameter.direction:
+            elif value_tupel[0] == AutopilotParameter.target_direction:
 
                 self.vessel.auto_pilot.reference_frame = self.vessel.orbit.reference_frame
                 self.vessel.auto_pilot.target_direction= value_tupel[1]
 
-            elif value_tupel[0] == ioParameter.heading:
+            elif value_tupel[0] == AutopilotParameter.target_heading:
 
                 self.vessel.auto_pilot.target_pitch_and_heading(self.vessel.flight().auto_pilot.target_pitch, value_tupel[1])
 
-            elif value_tupel[0] == ioParameter.roll:
+            elif value_tupel[0] == AutopilotParameter.target_roll:
                 self.vessel.auto_pilot.roll = value_tupel[1]
+
+            elif value_tuple[0] == ControlParameter.throttle:
+                self.vessel.control.throttle = value_tupel[1]
+
             else:
                 print("penis")
