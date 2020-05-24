@@ -32,3 +32,17 @@ class Rule:
         """
         return ( ioParameter.heading,
             rule_parameters[0] )
+
+    @staticmethod
+    def accelaration(rule_parameters, input_parameter):
+        """
+
+        :param rule_parameters:
+        :param input_parameter:
+        :return:
+        """
+        mass = input_parameter[ inputParameter.mass ]
+        thrust = input_parameter[ inputParameter.available_thrust ]
+        throttle = rule_parameters[0]* mass / thrust
+        return ( ioParameter.throttle,
+             throttle )
