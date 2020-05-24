@@ -18,7 +18,7 @@ class Rule:
         :param input_parameter:
         :return:
         """
-        pitch = pitch_from_x( input_parameter[ inputParameter.prograde ] )
+        pitch = pitch_from_x( input_parameter[ inputParameter[ 'flight.prograde' ] ] )
         return ( ioParameter.pitch,
             pitch + rule_parameters[0] )
 
@@ -41,8 +41,8 @@ class Rule:
         :param input_parameter:
         :return:
         """
-        mass = input_parameter[ inputParameter.mass ]
-        thrust = input_parameter[ inputParameter.available_thrust ]
+        mass = input_parameter[ inputParameter['mass'] ]
+        thrust = input_parameter[ inputParameter['available_thrust'] ]
         throttle = rule_parameters[0]* mass / thrust
         return ( ioParameter.throttle,
              throttle )

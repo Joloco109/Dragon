@@ -27,7 +27,10 @@ class AscendModule:
         self.conn = conn
         self.ruleset = ruleset
 
-        self.controller = Control(conn, vessel, ruleset)
+        self.ref_frame = conn.space_center.ReferenceFrame.create_hybrid(
+                position=vessel.orbit.body.reference_frame,
+                rotation=vessel.surface_reference_frame)
+        self.controller = Control(conn, vessel, ruleset, self.ref_frame)
 
         self.vessel.auto_pilot.engage()
 

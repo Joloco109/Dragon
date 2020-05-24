@@ -1,29 +1,28 @@
-from control_parameters import ioParameter, inputParameter
+from control_parameters import ioParameters
 
 class Control:
 
     vessel = None
     conn = None
     ruleset = None
+    ref_frame = None
 
     input_streams = dict()
 
-    def __init__(self, conn, vessel, ruleset):
+    def __init__(self, conn, vessel, ruleset, ref_frame):
         self.vessel = vessel
         self.conn = conn
         self.ruleset = ruleset
+        self.ref_frame = ref_frame
 
-        for parameter in inputParameter:
-            if parameter == inputParameter.position:
-                parameter_name = "center_of_mass"
-                new_stream = conn.add_stream(getattr, vessel.flight(), parameter_name)
-            elif parameter == inputParameter.angular_velocity:
-                new_stream = conn.add_stream(vessel.angular_velocity, self.vessel.orbital_reference_frame)
-            else:
-                parameter_name = str(parameter).split(".")[1]
-                new_stream = conn.add_stream(getattr, vessel.flight(), parameter_name)
+        for name, unit in  [ ('vessel', vessel),
+                ('flight', vessel.flight(ref_frame)),
+                ('autopilot', vessel.auto_pilot),
+                ('control',vessel.control) ]:
 
-            self.input_streams[parameter] = new_stream
+            for parameter in ioParameters[name]:
+                new_stream = conn.add_stream( getattr, unit, parameter.name )
+                self.input_streams[parameter] = new_stream
 
 
     def update(self):
