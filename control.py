@@ -1,4 +1,4 @@
-from control_parameters import ioParameters, AutopilotParameter
+from control_parameters import ioParameters, AutopilotParameter, ControlParameter
 
 
 class Control:
@@ -51,32 +51,32 @@ class Control:
 
     def handle_rule(self, rule):
 
-        iparams = self.fetch_input_parameters()
+        ioparams = self.fetch_input_parameters()
 
         name, value = rule([90], ioparams)
 
         return name, value
 
 
-    def update_value(self, value_tupel):
+    def update_value(self, value_tuple):
 
-        if len(value_tupel) != 2:
+        if len(value_tuple) != 2:
             return Exception()
         else:
-            if value_tupel[0] == AutopilotParameter.target_pitch:
+            if value_tuple[0] == AutopilotParameter.target_pitch:
                 self.vessel.auto_pilot.target_pitch_and_heading( value_tupel[1], self.vessel.auto_pilot.target_heading)
                 print("Updated!")
 
-            elif value_tupel[0] == AutopilotParameter.target_direction:
+            elif value_tuple[0] == AutopilotParameter.target_direction:
 
                 self.vessel.auto_pilot.reference_frame = self.vessel.orbit.reference_frame
                 self.vessel.auto_pilot.target_direction= value_tupel[1]
 
-            elif value_tupel[0] == AutopilotParameter.target_heading:
+            elif value_tuple[0] == AutopilotParameter.target_heading:
 
                 self.vessel.auto_pilot.target_pitch_and_heading(self.vessel.flight().auto_pilot.target_pitch, value_tupel[1])
 
-            elif value_tupel[0] == AutopilotParameter.target_roll:
+            elif value_tuple[0] == AutopilotParameter.target_roll:
                 self.vessel.auto_pilot.roll = value_tupel[1]
 
             elif value_tuple[0] == ControlParameter.throttle:
