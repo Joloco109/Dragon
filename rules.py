@@ -1,8 +1,7 @@
 from control_parameters import VesselParameter, FlightParameter, ControlParameter, AutopilotParameter
-from math import asin, sqrt
+from util import pitch_from_x, vec_abs, map, rad_to_deg, deg_to_rad
 
-def pitch_from_x( v ):
-    return asin(v[0]/sqrt( v[0]**2 + v[1]**2 + v[2]**2 ))
+
 
 class Rule:
     rule_parameters = list()
@@ -16,7 +15,9 @@ class Rule:
 
 
     @staticmethod
-    def const_pitch(rule_parameters, input_parameters):
+    def const_pitch(rule_parameters, input_parameter):
+
+        print(input_parameter[FlightParameter.velocity])
 
         return ( AutopilotParameter.target_pitch,
                  rule_parameters[0])
@@ -29,7 +30,14 @@ class Rule:
         :param input_parameter:
         :return:
         """
-        pitch = pitch_from_x( input_parameter[ FlightParameter.prograde ] )
+
+        if vec_abs(input_parameter[FlightParameter.velocity]) > 100:
+            pitch = pitch_from_x(input_parameter[FlightParameter.velocity])
+            pitch = rad_to_deg(pitch)
+            print(pitch)
+        else:
+            pitch = 90
+
         return ( AutopilotParameter.target_pitch,
             pitch + rule_parameters[0] )
 
@@ -45,7 +53,7 @@ class Rule:
             rule_parameters[0] )
 
     @staticmethod
-    def accelaration(rule_parameters, input_parameter):
+    def acceleration(rule_parameters, input_parameter):
         """
 
         :param rule_parameters:
@@ -55,5 +63,32 @@ class Rule:
         mass = input_parameter[ VesselParameter.mass ]
         thrust = input_parameter[ VesselParameter.available_thrust ]
         throttle = rule_parameters[0]* mass / thrust
+
+
+        if throttle > 0.4:
+            throttle = map(throttle, (0.4, 1), (0, 1))
+        else:
+            throttle = 0.01
+
         return ( ControlParameter.throttle,
              throttle )
+
+    @staticmethod
+    def max_q(rule_parameter, input_parameter):
+        """
+
+        :param rule_parameter: [(tuple of altitude values), max_Q value]
+        :param input_parameter:
+        :return:
+        """
+
+        Q = input_parameter[FlightParameter.dynamic_pressure]
+        throttle = input_parameter[ControlParameter.throttle]
+        alt = input_parameter[FlightParameter.mean_altitude]
+        if rule_parameter[0][0] < alt < rule_parameter[0][1]:
+            if Q > rule_parameter:
+                return ( ControlParameter.throttle,
+                         throttle - 0.05 )
+            else:
+                return ( ControlParameter.throttle,
+                         throttle )

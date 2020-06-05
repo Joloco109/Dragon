@@ -11,6 +11,7 @@ class AscendModule:
 
     vessel = None
     conn = None
+    ref_frame = None
 
     target_parameters = None
     actual_parameters = None
@@ -38,8 +39,10 @@ class AscendModule:
         self.update_thread.run()
         print(self.update_thread)
 
+
     def set_orbital_parameters(self, params):
         self.target_parameters = params
+
 
     def update(self):
         while not self.finish:
@@ -49,6 +52,8 @@ class AscendModule:
                 self.stop()
 
             self.controller.update()
+            #self.conn.drawing.add_direction((1, 0, 0), self.ref_frame)
+            #self.conn.drawing.add_direction((0, 1, 0), self.ref_frame)
 
             time.sleep(0.1)
 

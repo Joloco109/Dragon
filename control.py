@@ -1,4 +1,5 @@
-from control_parameters import ioParameters, AutopilotParameter, ControlParameter
+from control_parameters import ioParameters, AutopilotParameter, ControlParameter, FlightParameter, VesselParameter
+from rules import Rule
 
 
 class Control:
@@ -33,7 +34,6 @@ class Control:
 
         for rule in self.ruleset:
             new_value = self.handle_rule(rule)
-            print(new_value)
             self.update_value(new_value)
 
 
@@ -65,11 +65,10 @@ class Control:
         else:
             if value_tuple[0] == AutopilotParameter.target_pitch:
                 self.vessel.auto_pilot.target_pitch_and_heading( value_tuple[1], self.vessel.auto_pilot.target_heading)
-                print("Updated!")
 
             elif value_tuple[0] == AutopilotParameter.target_direction:
 
-                self.vessel.auto_pilot.reference_frame = self.vessel.orbit.reference_frame
+                self.vessel.auto_pilot.reference_frame = self.vessel.orbit.body.reference_frame
                 self.vessel.auto_pilot.target_direction= value_tuple[1]
 
             elif value_tuple[0] == AutopilotParameter.target_heading:
